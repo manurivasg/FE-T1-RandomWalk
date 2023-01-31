@@ -26,6 +26,7 @@ La estudiante encargada de desarrollar todo el código y pruebas presentes para 
 El código y resultados que encontrará en este repositorio hacen parte de la sección de simulación computacional que se le es solicitada a la estudiante como arte de su Tarea 1 para la clase de Física Estadística, semestre 2023-1.
 
 En este podrá encontrar el código con el cual se llevó a cabo la simulación, compuesto por dos funciones, RandomWalk y ejecutar_RandomWalk. La primera es la encargada de desarrollar el proceso de obtener la caminata aleatoria y determinar como se le van a mostrar los resultados al usuario dependiendo de en cuántas dimensiones desea que se de la caminata, mientras que la segunda función es la encargada de interactuar directamente con el usuario para obtener los datos necesarios para desarrollar la caminata (dimensiones y número de pasos).
+
 [Back to top](#RandomWalkSimulation)
 
 

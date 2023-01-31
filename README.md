@@ -5,8 +5,8 @@
 
 1. [Random Walk Simulation](#RandomWalkSimulation)
     1. [Creadora](#Creadora)
-    1. [Sobre el proyecto](#Sobreelproyecto)
-    1. [Replica de resultados](#Replicaderesultados)  
+    1. [Proyecto](#Proyecto)
+    1. [Resultados](#Resultados)  
 
 <!-- Creadora del proyecto -->
 ## Creadora
@@ -20,8 +20,8 @@ La estudiante encargada de desarrollar todo el código y pruebas presentes para 
 
 [Back to top](#RandomWalkSimulation)
 
-<!-- Sobreelproyecto -->
-## Sobreelproyecto
+<!-- Proyecto -->
+## Proyecto
 
 El código y resultados que encontrará en este repositorio hacen parte de la sección de simulación computacional que se le es solicitada a la estudiante como arte de su Tarea 1 para la clase de Física Estadística, semestre 2023-1.
 
@@ -30,8 +30,8 @@ En este podrá encontrar el código con el cual se llevó a cabo la simulación,
 [Back to top](#RandomWalkSimulation)
 
 
-<!-- Replicaderesultados -->
-## Replica de resultados
+<!-- Resultados -->
+## Resultados
 Para poder replicar los resultados que se muestran en el reporte de la simulación es necesario que el usuario descargue y ejecute el archivo de python "RandomWalk.py". Una vez lo haga, este podrá observar en su consola la siguiente frase: 
 
 "Bienvenido a Random Walk Simulation"

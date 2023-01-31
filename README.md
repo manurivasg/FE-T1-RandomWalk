@@ -5,8 +5,8 @@
 
 1. [Random Walk Simulation](#RandomWalkSimulation)
     1. [Creadora](#Creadora)
-    1. [Sobre el proyecto](#Sobre el proyecto)
-    1. [Replica de resultados](#Replica de resultados)  
+    1. [Sobre el proyecto](#Sobreelproyecto)
+    1. [Replica de resultados](#Replicaderesultados)  
 
 <!-- Creadora del proyecto -->
 ## Creadora

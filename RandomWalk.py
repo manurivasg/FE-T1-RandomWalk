@@ -34,17 +34,14 @@ Xf(np.array) : Arreglo con todas las posiciones de la caminata con la misma cant
 """
 def RandomWalk(dim,N,graph):
     if 0<dim<4:
-        X0 = np.array([[0]]*dim)#Se define una posición inicial
-        DX = np.random.normal(0,1,(dim,N))#Se determinan las variaciones de posición bajo una dist. normal
+        X0 = np.array([[0]]*dim)
+        DX = np.random.normal(0,1,(dim,N))
         Xf = np.concatenate((X0,np.cumsum(DX, axis = 1)), axis = 1)
-        #Se unen ambos arrays (X0,DX)
-        # para el segundo array usamos cumsum que va sumando los valores anteriores 
-        # con el siguiente para obtener la caminata
         
-        if dim==1 and graph:#para una dimension muestra una tabla
+        if dim==1 and graph:
             for j in range(N):
                 print("X"+str(j)+" | ",Xf[0][j],"\n")
-        elif dim==2 and graph:#para 2 y 3 muestra una gráfica y guarda la figura 
+        elif dim==2 and graph:
             gr = plt.plot(Xf[0],Xf[1],"co-")
             plt.title("Random Walk",fontsize=14,fontweight="bold")
             plt.xlabel("Posición en coordenada X")
@@ -66,10 +63,10 @@ def RandomWalk(dim,N,graph):
 
 """
 Esta función desarrolla una serie de caminatas aleatorias todas bajo las mismas condiciones,
-posteriormente calcula el vector de posición final para cada una de las caminatas y crea un
-gráfica de barras que ilustra cuantas veces se repite cada posición final tras un gran 
-número de repeticiones
-
+posteriormente calcula el vector de posición final para cada una de las caminatas, 
+calcula el promedio de r y r^2 tras las N repeticiones y crea una gráfica de barras 
+que ilustra cuantas veces se repite cada posición final tras un gran número de repeticiones
+ 
 PARÁMETROS: 
 n(int) : Número de veces que se van a realizar las caminatas aleatorias. 
 dim(int) : Número de dimensiones en las que se desea que se desea tener 
@@ -80,12 +77,14 @@ N(int) : Número de pasos que se desea que tenga la caminata aleatoria (es decir
             inicial).
 
 RETORNA: 
-r(np.array) : Arreglo de las posiciones finales de las n repeticiones de caminatas
+r(list) : Arreglo de las posiciones finales de las n repeticiones de caminatas
                 aleatorias sin modificación alguna.
-rf(np.array) : Arreglo de las posiciones finales de las n repeticiones de caminatas 
-                aleatorias sin posiciones repetidas.
-height(np.array) : Arreglo que almacena el número de veces que cada posición final
+height(list) : Arreglo que almacena el número de veces que cada posición final
                     se repite en el arreglo inicial r.
+prom_r(float) : Valor promedio de las posiciones finales de las n repeticiones
+                de caminatas aleatorias
+prom_r2(float) : Valor promedio de las posiciones finales al cuadrado de las 
+                    n repeticiones de caminatas aleatorias
 """
 def RandomWalks_y_graph_r(n,N,dim):
     if dim == 1: 
@@ -95,6 +94,9 @@ def RandomWalks_y_graph_r(n,N,dim):
             vec_r = round(np.sqrt(((xf[-1][0])**2)+((xf[-1][1])**2)),2)
             r.append(vec_r)
         height = count_occurrences(r)
+        r2 = list(map(lambda x : x**2,r))
+        prom_r = calc_average(r)
+        prom_r2 = calc_average(r2)
         plt.bar(r,height,color="cyan",linewidth=0.1)
         plt.title("Número de veces que se repiten las distancias finales de la caminata aleatoria",fontsize=10,fontweight="bold")
         plt.xlabel("Distancias r")
@@ -108,7 +110,9 @@ def RandomWalks_y_graph_r(n,N,dim):
             vec_r = round(np.sqrt(((xf[-1][0])**2)+((xf[-1][1])**2)),2)
             r.append(vec_r)
         height = count_occurrences(r)
-        
+        r2 = list(map(lambda x : x**2,r))
+        prom_r = calc_average(r)
+        prom_r2 = calc_average(r2)
         plt.bar(r,height,color="cyan",linewidth=0.1)
         plt.title("Número de veces que se repiten las distancias finales de la caminata aleatoria",fontsize=10,fontweight="bold")
         plt.xlabel("Distancias r")
@@ -122,25 +126,28 @@ def RandomWalks_y_graph_r(n,N,dim):
             vec_r = round(np.sqrt(((xf[-1][0])**2)+((xf[-1][1])**2)+((xf[-1][2])**2)),2)
             r.append(vec_r)
         height = count_occurrences(r)
+        r2 = list(map(lambda x : x**2,r))
+        prom_r = calc_average(r)
+        prom_r2 = calc_average(r2)
         plt.bar(r,height,color="cyan",linewidth=0.1)
         plt.title("Número de veces que se repiten las distancias finales de la caminata aleatoria",fontsize=10,fontweight="bold")
         plt.xlabel("Distancias r")
         plt.ylabel("Repeticiones de cada distancia final")
         plt.savefig("repite each r.jpg")
         plt.show()
-    return r,height
+    return r,height,prom_r,prom_r2
 
 """
 Esta función está encargada de calcular la cantidad de veces que se repite un 
 eleento de una lista dentro de ella. 
 
 PARÁMETROS:
-r(np.array) : Arreglo al que se le quieren contar la cantidad de ocurrencias de 
+r(list) : Arreglo al que se le quieren contar la cantidad de ocurrencias de 
                 cada elemento y eliminarlo los elementos repetidos.
 
 RETORNA: 
 
-occurrences(np.array) : Arreglo con la cantidad de veces que se repite cada 
+occurrences(list) : Arreglo con la cantidad de veces que se repite cada 
                         elemento en la lista original.
 """    
 def count_occurrences(r):
@@ -164,7 +171,7 @@ PARÁMETROS:
 None
 
 RETORNA:
-Xf(np.array) : Arreglo con todas las posiciones de la caminata con la misma cantidad
+Xf(list) : Arreglo con todas las posiciones de la caminata con la misma cantidad
                 de columnas como dimensiones y filas como pasos se hayan ingresado por
                 parámetro.
 """    
@@ -188,23 +195,44 @@ PARÁMETROS:
 None
 
 RETORNA:
-r(np.array) : Arreglo de las posiciones finales de las n repeticiones de caminatas
+r(list) : Arreglo de las posiciones finales de las n repeticiones de caminatas
                 aleatorias sin modificación alguna.
-rf(np.array) : Arreglo de las posiciones finales de las n repeticiones de caminatas 
-                aleatorias sin posiciones repetidas.
-height(np.array) : Arreglo que almacena el número de veces que cada posición final
+height(list) : Arreglo que almacena el número de veces que cada posición final
                     se repite en el arreglo inicial r.
+prom_r(float) : Valor promedio de las posiciones finales de las n repeticiones
+                de caminatas aleatorias
+prom_r2(float) : Valor promedio de las posiciones finales al cuadrado de las 
+                    n repeticiones de caminatas aleatorias
+
+
 """   
 def ejecutar_RandomWalks_y_graph_r ():
     dim = int(input("Por favor ingrese las dimensiones en las que desea llevar a cabo la caminata aleatoria: (1-3) "))
     N = int(input("Por favor ingrese la cantidad de pasos que desea que tenga la caminata aleatoria: (>0) "))
     n = int(input("Ingrese el número de veces que desea que se repita el proceso: "))
     if 0<dim<4 and N>0 and n>0:
-        r,h = RandomWalks_y_graph_r(n,N,dim)
-        return r,h
+        r,h,prom_r,prom_r2 = RandomWalks_y_graph_r(n,N,dim)
+        return r,h,prom_r,prom_r2,n
     else: 
         print("No son válidos los parámetros que ingresa por input")
         return None
+
+"""
+Esta función calcula el valor promedio de los valores de una lista que ingresa por 
+parámetro
+
+PARÁMETROS:
+r(list) : lista de valores a calcularles el promedio
+
+RETORNA: 
+prom(float) : Valor promedio de los datos que ingresan por parámetro en la lista
+"""   
+def calc_average (r):
+    tot = 0 
+    for i in range(len(r)):
+        tot+=r[i]
+    prom = round(tot/len(r),2)
+    return prom
 
 """
 Menú principal
@@ -219,7 +247,10 @@ while(True):
     if option == 1: 
         xf = ejecutar_RandomWalk()
     elif option == 2:
-        r,h = ejecutar_RandomWalks_y_graph_r()
+        r,h,prom_r,prom_r2,n = ejecutar_RandomWalks_y_graph_r()
+        print("\nEl promedio de las distancias finales tras ",n," caminatas es: ",prom_r)
+        print("\nEl promedio de las distancias finales al cuadrado tras ",n," caminatas es: ",prom_r2)
+
     else: 
         print("¡Hasta Luego! :)")
         break
